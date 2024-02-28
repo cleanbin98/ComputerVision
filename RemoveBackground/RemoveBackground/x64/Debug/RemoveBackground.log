@@ -1,0 +1,12 @@
+﻿  RemoveBackground.cpp
+C:\opencv\build\include\opencv2\core.hpp(1743,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+  (compiling source file 'RemoveBackground.cpp')
+  
+C:\opencv\build\include\opencv2\core.hpp(1743,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+  (compiling source file 'RemoveBackground.cpp')
+  
+C:\opencv\build\include\opencv2\core.hpp(1743,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+  (compiling source file 'RemoveBackground.cpp')
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+  RemoveBackground.vcxproj -> C:\RemoveBackground\x64\Debug\RemoveBackground.exe
