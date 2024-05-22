@@ -22,7 +22,7 @@ int main()
 	namedWindow("Frame");
 	namedWindow("FG Mask MOG 2");
 
-	//mog2 함수(배경 제어 함수) 객체 선언
+	//mog2 함수(배경 제거 함수) 객체 선언
 	pMOG2 = createBackgroundSubtractorMOG2();
 
 	VideoCapture capture("C:/ImageSamle/walking.mp4");
@@ -34,13 +34,16 @@ int main()
 			exit(EXIT_FAILURE);
 		}
 
+		// 배경 제거 적용
 		pMOG2->apply(frame, fgMaskMOG2);
 
 		stringstream ss;
+		//전 후 비교를 위한 새로운 창 생성
 		rectangle(frame, cv::Point(10, 2), cv::Point(100, 20),
 			cv::Scalar(255, 255, 255), -1);
 		ss << capture.get(CAP_PROP_POS_FRAMES);
 		string frameNumberString = ss.str();
+		//프레임 수 출력
 		putText(frame, frameNumberString.c_str(), cv::Point(15, 15),
 			FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 0));
 
