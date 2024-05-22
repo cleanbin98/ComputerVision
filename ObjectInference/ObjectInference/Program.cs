@@ -8,11 +8,13 @@ namespace Project
     class Program
     {
         static void Main(string[] args)
+        //객체 추론에 필요한 파일 설정
         {
             const string config = "C:/ObjectInference/graph.pbtxt";
             const string model = "C:/ObjectInference/frozen_inference_graph.pb";
             string[] classNames = File.ReadAllLines("C:/ObjectInference/labelmap.txt");
 
+            //rect 크기, 전체 크기 설정
             Mat image = new Mat("C:/ImageSamle/umbrella.jpg");
             Mat dst = new Mat();
             Cv2.Resize(image, dst, new Size(1080, 720));
@@ -22,6 +24,7 @@ namespace Project
             net.SetInput(inputBlob);
             Mat outputBlobs = net.Forward();
 
+            //추론 확률이 일정량 이상이면 rect를 화면에 보임
             Mat prob = new Mat(outputBlobs.Size(2), outputBlobs.Size(3), MatType.CV_32F, outputBlobs.Ptr(0));
             for (int p = 0; p < prob.Rows; p++)
             {
