@@ -22,6 +22,7 @@ int main()
 	namedWindow("Frame");
 	namedWindow("FG Mask MOG 2");
 
+	//mog2 함수(배경 제어 함수) 객체 선언
 	pMOG2 = createBackgroundSubtractorMOG2();
 
 	VideoCapture capture("C:/ImageSamle/walking.mp4");
