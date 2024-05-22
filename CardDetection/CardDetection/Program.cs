@@ -15,6 +15,7 @@ namespace Project
             Mat ajdustSizeSrc = new Mat();
             Cv2.Resize(src, ajdustSizeSrc, new OpenCvSharp.Size(500, 500));
 
+            //사각형 검출 메서드 생성
             OpenCvSharp.Point[] squares = Square(ajdustSizeSrc);
             Mat square = DrawSquare(ajdustSizeSrc, squares);
             Mat dst = PerspectiveTransform(ajdustSizeSrc, squares);
@@ -39,22 +40,26 @@ namespace Project
 
         public static OpenCvSharp.Point[] Square(Mat src)
         {
+            / 다각형 계산을 위한 Mat 함수 선언
             Mat[] split = Cv2.Split(src);
             Mat blur = new Mat();
             Mat binary = new Mat();
             OpenCvSharp.Point[] squares = new OpenCvSharp.Point[4];
 
+            /생성되는 창 크기 설정
             int N = 10;
             double max = src.Size().Width * src.Size().Height * 0.9;
             double min = src.Size().Width * src.Size().Height * 0.1;
 
             for (int channel = 0; channel < 3; channel++)
             {
+                /노이즈 감소를 위한 명함 외 흐림 효과 적용
                 Cv2.GaussianBlur(split[channel], blur, new OpenCvSharp.Size(5, 5), 1);
                 for (int i = 0; i < N; i++)
                 {
                     Cv2.Threshold(blur, binary, i * 255 / N, 255, ThresholdTypes.Binary);
 
+                    /윤곽선 검출
                     OpenCvSharp.Point[][] contours;
                     HierarchyIndex[] hierarchy;
                     Cv2.FindContours(binary, out contours, out hierarchy, RetrievalModes.List, ContourApproximationModes.ApproxTC89KCOS);
@@ -62,6 +67,7 @@ namespace Project
                     Mat test = src.Clone();
                     Cv2.DrawContours(test, contours, -1, new Scalar(0, 0, 255), 3);
 
+                    /명함의 꼭짓점, 면적, 볼록성 계산을 위한 다각형 근사 계산
                     for (int j = 0; j < contours.Length; j++)
                     {
                         double perimeter = Cv2.ArcLength(contours[j], true);
@@ -86,6 +92,7 @@ namespace Project
             return squares;
         }
 
+        /화면에 다각형 근사된 명함을 그려줌
         public static Mat DrawSquare(Mat src, OpenCvSharp.Point[] squares)
         {
             Mat drawsquare = src.Clone();
@@ -94,6 +101,7 @@ namespace Project
             return drawsquare;
         }
 
+        /perspectiveTransform으로 화면에 출력
         public static Mat PerspectiveTransform(Mat src, OpenCvSharp.Point[] squares)
         {
             Mat dst = new Mat();
